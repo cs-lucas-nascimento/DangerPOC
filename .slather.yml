@@ -1,5 +1,5 @@
 # Coveralls
-ci_service: travis_ci
+# ci_service: travis_ci
 coverage_service: coveralls
 xcodeproj: DangerPOC.xcodeproj
 scheme: DangerPOC

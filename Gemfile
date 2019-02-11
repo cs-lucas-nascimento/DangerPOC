@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
  gem "danger"
  # gem "fastlane"
- gem "coveralls"
+ gem "coveralls", require: false
  # gem "xcov"
  gem "slather"
  gem "xcpretty"

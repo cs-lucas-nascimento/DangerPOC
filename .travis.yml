@@ -60,9 +60,11 @@ notifications:
     on_success: never
 
 after_success:
+  - coveralls push
+  - bundle exec slather
   - slather
-  - slather coverage -s --scheme DangerPOC DangerPOC.xcodeproj
-  - slather coverage --html --output-directory Report/slather --scheme DangerPOC  DangerPOC.xcodeproj
+  # - slather coverage -s --scheme DangerPOC DangerPOC.xcodeproj
+  # - slather coverage --html --output-directory Report/slather --scheme DangerPOC  DangerPOC.xcodeproj
   # - slather #Coveralls
   # - bash <(curl -s https://codecov.io/bash) -J 'DangerPOC #Codecov
   # - bash <(curl -s https://codecov.io/bash) -f path/to/xml_report/cobertura.xml -X coveragepy -X gcov -X xcode #Codecov
