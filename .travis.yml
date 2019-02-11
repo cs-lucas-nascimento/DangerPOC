@@ -38,15 +38,7 @@ jobs:
     - stage: Clean-Build
       script: 
         # - xcodebuild clean build-for-testing -project DangerPOC.xcodeproj -scheme "DangerPOC" -destination "name=iPhone XR,OS=12.1"
-        - set -o pipefail &&
-            xcodebuild \
-              -project DangerPOC.xcodeproj \
-              -scheme "DangerPOC" \
-              -sdk iphonesimulator \
-              -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' \
-              clean build-for-testing | xcpretty \
-              -r "html" \
-              -o "Report/build.html"
+        - set -o pipefail && xcodebuild -project DangerPOC.xcodeproj -scheme "DangerPOC" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' clean build-for-testing | xcpretty -r "html" -o "Report/build.html"
 
     - stage: Tests
       script: 
