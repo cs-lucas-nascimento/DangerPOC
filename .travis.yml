@@ -60,7 +60,7 @@ notifications:
   email:
     on_success: never
 
-after_success: slather
+after_success: slather coverage --html --output-directory Report/slather --scheme DangerPOC  DangerPOC.xcodeproj
   # - coveralls push
   # - bundle exec slather
   # - slather coverage -s --scheme DangerPOC DangerPOC.xcodeproj
