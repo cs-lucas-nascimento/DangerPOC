@@ -26,12 +26,12 @@ env:
     - DESTINATION="OS=12.1,name=iPhone XR"                   
 
 before_install: 
-  - gem install bundler
+  # - gem install bundler
   - rvm use $RVM_RUBY_VERSION
 
 install: 
   - bundle install --without=documentation --path ../travis_bundle_dir
-  - gem install xcpretty -N
+  # - gem install xcpretty -N
 
 jobs:
   include:
@@ -45,11 +45,11 @@ jobs:
         # - xcodebuild clean test -project DangerPOC.xcodeproj -scheme "DangerPOC" -destination "name=iPhone XR,OS=12.1"
         - set -o pipefail && xcodebuild -project DangerPOC.xcodeproj -scheme "DangerPOC" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' test | xcpretty -r "html" -o "Report/tests.html"
 
-    - stage: Coverage
-      script: 
-        - slather
-        - slather coverage -s --scheme DangerPOC DangerPOC.xcodeproj
-        - slather coverage --html --output-directory Report/slather --scheme DangerPOC  DangerPOC.xcodeproj
+    # - stage: Coverage
+    #   script: 
+    #     - slather
+    #     - slather coverage -s --scheme DangerPOC DangerPOC.xcodeproj
+    #     - slather coverage --html --output-directory Report/slather --scheme DangerPOC  DangerPOC.xcodeproj
 # script:  
 #   - xcodebuild build-for-testing -project TwitchApp.xcodeproj -scheme TwitchApp -destination "name=iPhone X,OS=12.1"
 #   - xcodebuild clean test -project TwitchApp.xcodeproj -scheme "TwitchApp" -destination "name=iPhone X,OS=12.1"
@@ -58,7 +58,10 @@ notifications:
   email:
     on_success: never
 
-# after_success:
+after_success:
+  - slather
+  - slather coverage -s --scheme DangerPOC DangerPOC.xcodeproj
+  - slather coverage --html --output-directory Report/slather --scheme DangerPOC  DangerPOC.xcodeproj
   # - slather #Coveralls
   # - bash <(curl -s https://codecov.io/bash) -J 'DangerPOC #Codecov
   # - bash <(curl -s https://codecov.io/bash) -f path/to/xml_report/cobertura.xml -X coveragepy -X gcov -X xcode #Codecov
