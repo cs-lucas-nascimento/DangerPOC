@@ -31,6 +31,7 @@ before_install:
 
 install: 
   - bundle install --without=documentation --path ../travis_bundle_dir
+  # - gem install slather --no-rdoc --no-ri --no-document --quiet
   # - gem install xcpretty -N
 
 jobs:
