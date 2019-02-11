@@ -27,6 +27,7 @@ env:
 
 before_install: 
   - gem install bundler
+  - gem install xcpretty  slather -N
   - rvm use $RVM_RUBY_VERSION
 
 install: 
@@ -39,12 +40,12 @@ jobs:
     - stage: Clean-Build
       script: 
         # - xcodebuild clean build-for-testing -project DangerPOC.xcodeproj -scheme "DangerPOC" -destination "name=iPhone XR,OS=12.1"
-        - set -o pipefail && xcodebuild -project DangerPOC.xcodeproj -scheme "DangerPOC" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' clean build-for-testing | xcpretty -r "html" -o "Report/build.html"
+        - set -o pipefail && xcodebuild -project DangerPOC.xcodeproj -scheme "DangerPOC" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' -enableCodeCoverage YES clean build-for-testing test | xcpretty -r "html" -o "Report/build.html"
 
-    - stage: Tests
-      script: 
-        # - xcodebuild clean test -project DangerPOC.xcodeproj -scheme "DangerPOC" -destination "name=iPhone XR,OS=12.1"
-        - set -o pipefail && xcodebuild -project DangerPOC.xcodeproj -scheme "DangerPOC" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' test | xcpretty -r "html" -o "Report/tests.html"
+    # - stage: Tests
+    #   script: 
+    #     # - xcodebuild clean test -project DangerPOC.xcodeproj -scheme "DangerPOC" -destination "name=iPhone XR,OS=12.1"
+    #     - set -o pipefail && xcodebuild -project DangerPOC.xcodeproj -scheme "DangerPOC" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' test | xcpretty -r "html" -o "Report/tests.html"
 
     # - stage: Coverage
     #   script: 
@@ -59,10 +60,9 @@ notifications:
   email:
     on_success: never
 
-after_success:
-  - coveralls push
-  - bundle exec slather
-  - slather
+after_success: slather
+  # - coveralls push
+  # - bundle exec slather
   # - slather coverage -s --scheme DangerPOC DangerPOC.xcodeproj
   # - slather coverage --html --output-directory Report/slather --scheme DangerPOC  DangerPOC.xcodeproj
   # - slather #Coveralls
