@@ -32,8 +32,9 @@ before_install:
 
 install: 
   - bundle install --without=documentation --path ../travis_bundle_dir
-  # - gem install slather --no-rdoc --no-ri --no-document --quiet
-  # - gem install xcpretty -N
+  - gem install slather --no-rdoc --no-ri --no-document --quiet
+  - gem install xcpretty -N
+  - gem install coveralls
 
 jobs:
   include:
@@ -60,7 +61,11 @@ notifications:
   email:
     on_success: never
 
-after_success: slather coverage --html --output-directory Report/slather --scheme DangerPOC  DangerPOC.xcodeproj
+after_success: 
+  - slather
+  - slather coverage --show --html --output-directory Report/slather --scheme DangerPOC  DangerPOC.xcodeproj
+  - slather coverage --html --output-directory Report/slather --scheme DangerPOC  DangerPOC.xcodeproj
+  - coveralls push
   # - coveralls push
   # - bundle exec slather
   # - slather coverage -s --scheme DangerPOC DangerPOC.xcodeproj
