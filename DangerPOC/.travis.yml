@@ -1,0 +1,72 @@
+# language: objective-c
+# osx_image: xcode8
+# script:
+#     - set -o pipefail
+#     - bundle exec fastlane push
+language: swift
+osx_image: xcode10.1
+cache:
+  bundler: true
+
+branches:
+  only:
+    - master
+    - develop
+    - /^hotfix.*$/
+    - /^feature.*$/  
+
+env:
+  global:
+    - LC_CTYPE=en_US.UTF-8
+    - LANG=en_US.UTF-8
+    - PROJECT=DangerPOC.xcodeproj
+    - SCHEME="DangerPOC"
+
+  matrix:
+    - DESTINATION="OS=12.1,name=iPhone XR"                   
+
+before_install: 
+  - rvm use $RVM_RUBY_VERSION
+
+install: 
+  - bundle install --without=documentation --path ../travis_bundle_dir
+
+jobs:
+  include:
+    - stage: Clean-Build
+      script: 
+        - set -o pipefail &&
+            xcodebuild \
+              -project DangerPOC.xcodeproj \
+              -scheme "DangerPOC" \
+              -sdk iphonesimulator \
+              -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' \
+              clean build-for-testing \
+            | xcpretty \
+              -r "html" \
+              -o "Report/build.html"
+
+    - stage: Tests
+      script: 
+        - set -o pipefail &&
+            xcodebuild \
+              -project DangerPOC.xcodeproj \
+              -scheme "DangerPOC" \
+              -sdk iphonesimulator \
+              -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' \
+              test \
+            | xcpretty \
+              -r "html" \
+              -o "Report/tests.html"
+# script:  
+#   - xcodebuild build-for-testing -project TwitchApp.xcodeproj -scheme TwitchApp -destination "name=iPhone X,OS=12.1"
+#   - xcodebuild clean test -project TwitchApp.xcodeproj -scheme "TwitchApp" -destination "name=iPhone X,OS=12.1"
+
+notifications:
+  email:
+    on_success: never
+
+after_success:
+  - slather #Coveralls
+  # - bash <(curl -s https://codecov.io/bash) -J 'DangerPOC #Codecov
+  # - bash <(curl -s https://codecov.io/bash) -f path/to/xml_report/cobertura.xml -X coveragepy -X gcov -X xcode #Codecov
