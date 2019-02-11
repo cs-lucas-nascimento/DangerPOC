@@ -26,8 +26,8 @@ env:
     - DESTINATION="OS=12.1,name=iPhone XR"                   
 
 before_install: 
-  - gem install bundler
-  - gem install xcpretty -N
+  # - gem install bundler
+  # - gem install xcpretty -N
   - rvm use $RVM_RUBY_VERSION
 
 install: 
@@ -37,31 +37,25 @@ jobs:
   include:
     - stage: Clean-Build
       script: 
-        - xcodebuild clean build-for-testing -project DangerPOC.xcodeproj -scheme "DangerPOC" -destination "name=iPhone XR,OS=12.1"
-        # - set -o pipefail &&
-        #     xcodebuild \
-        #       -project DangerPOC.xcodeproj \
-        #       -scheme "DangerPOC" \
-        #       -sdk iphonesimulator \
-        #       -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' \
-        #       clean build-for-testing \
-        #     | xcpretty \
-        #       -r "html" \
-        #       -o "Report/build.html"
+        # - xcodebuild clean build-for-testing -project DangerPOC.xcodeproj -scheme "DangerPOC" -destination "name=iPhone XR,OS=12.1"
+        - set -o pipefail &&
+            xcodebuild \
+              -project DangerPOC.xcodeproj \
+              -scheme "DangerPOC" \
+              -sdk iphonesimulator \
+              -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' \
+              clean build-for-testing | xcpretty \
+              -r "html" \
+              -o "Report/build.html"
 
     - stage: Tests
       script: 
-        - xcodebuild clean test -project DangerPOC.xcodeproj -scheme "DangerPOC" -destination "name=iPhone XR,OS=12.1"
-        # - set -o pipefail &&
-        #     xcodebuild \
-        #       -project DangerPOC.xcodeproj \
-        #       -scheme "DangerPOC" \
-        #       -sdk iphonesimulator \
-        #       -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' \
-        #       test \
-        #     | xcpretty \
-        #       -r "html" \
-        #       -o "Report/tests.html"
+        # - xcodebuild clean test -project DangerPOC.xcodeproj -scheme "DangerPOC" -destination "name=iPhone XR,OS=12.1"
+        - set -o pipefail && xcodebuild -project DangerPOC.xcodeproj -scheme "DangerPOC" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' test | xcpretty -r "html" -o "Report/tests.html"
+
+    - stage: Coverage
+      script: 
+        - slather
 # script:  
 #   - xcodebuild build-for-testing -project TwitchApp.xcodeproj -scheme TwitchApp -destination "name=iPhone X,OS=12.1"
 #   - xcodebuild clean test -project TwitchApp.xcodeproj -scheme "TwitchApp" -destination "name=iPhone X,OS=12.1"
@@ -70,7 +64,7 @@ notifications:
   email:
     on_success: never
 
-after_success:
-  - slather #Coveralls
+# after_success:
+  # - slather #Coveralls
   # - bash <(curl -s https://codecov.io/bash) -J 'DangerPOC #Codecov
   # - bash <(curl -s https://codecov.io/bash) -f path/to/xml_report/cobertura.xml -X coveragepy -X gcov -X xcode #Codecov
