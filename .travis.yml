@@ -26,6 +26,8 @@ env:
     - DESTINATION="OS=12.1,name=iPhone XR"                   
 
 before_install: 
+  - gem install bundler
+  - gem install xcpretty -N
   - rvm use $RVM_RUBY_VERSION
 
 install: 
