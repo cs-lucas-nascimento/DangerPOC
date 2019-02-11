@@ -1,6 +1,6 @@
 # Coveralls
 coverage_service: coveralls
-xcodeproj: DangerPOC/DangerPOC.xcodeproj
+xcodeproj: DangerPOC.xcodeproj
 scheme: DangerPOC
 ignore:
   - DangerPOCTests/*
