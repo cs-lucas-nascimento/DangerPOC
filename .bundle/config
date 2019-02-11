@@ -1,0 +1,3 @@
+---
+BUNDLE_PATH: "../travis_bundle_dir"
+BUNDLE_WITHOUT: "documentation"
