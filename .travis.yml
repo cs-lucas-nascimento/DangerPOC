@@ -28,6 +28,8 @@ env:
 before_install: 
   - gem install bundler
   - gem install xcpretty  slather -N
+  # download slather (to send coverage to http://coveralls.io)
+  - gem install slather --no-rdoc --no-ri --no-document --quiet
   - rvm use $RVM_RUBY_VERSION
 
 install: 
@@ -35,14 +37,16 @@ install:
   - gem install slather --no-rdoc --no-ri --no-document --quiet
   - gem install xcpretty -N
   - gem install coveralls
+  - gem install xcov
 
 jobs:
   include:
     - stage: Clean-Build
       script: 
         # - xcodebuild clean build-for-testing -project DangerPOC.xcodeproj -scheme "DangerPOC" -destination "name=iPhone XR,OS=12.1"
-        - set -o pipefail && xcodebuild -project DangerPOC.xcodeproj -scheme "DangerPOC" -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' -enableCodeCoverage YES clean build-for-testing test | xcpretty -r "html" -o "Report/build.html"
-
+        - echo "*** Start Clean Build Tests *** "
+        - set -o pipefail && xcodebuild -project DangerPOC.xcodeproj -scheme DangerPOC -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' -enableCodeCoverage YES clean build-for-testing test | xcpretty -r "html" -o "Report/build.html"
+        - echo "*** Finish Clean Build Tests *** "
     # - stage: Tests
     #   script: 
     #     # - xcodebuild clean test -project DangerPOC.xcodeproj -scheme "DangerPOC" -destination "name=iPhone XR,OS=12.1"
@@ -63,9 +67,6 @@ notifications:
 
 after_success: 
   - slather
-  - slather coverage --show --html --output-directory Report/slather --scheme DangerPOC  DangerPOC.xcodeproj
-  - slather coverage --html --output-directory Report/slather --scheme DangerPOC  DangerPOC.xcodeproj
-  - coveralls push
   # - coveralls push
   # - bundle exec slather
   # - slather coverage -s --scheme DangerPOC DangerPOC.xcodeproj
