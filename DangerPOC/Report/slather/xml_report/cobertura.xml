@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage line-rate="0.3796296296296297" branch-rate="1.0000000000000000" lines-covered="41" lines-valid="108" branches-covered="0" branches-valid="0" complexity="0.0" timestamp="1550016028" version="Slather 2.4.6">
+<coverage line-rate="0.3796296296296297" branch-rate="1.0000000000000000" lines-covered="41" lines-valid="108" branches-covered="0" branches-valid="0" complexity="0.0" timestamp="1550018938" version="Slather 2.4.6">
   <sources>
     <source>/Users/lucasnascimento/GitHub/DangerPOC</source>
   </sources>

@@ -27,17 +27,13 @@ env:
 
 before_install: 
   - gem install bundler
-  - gem install xcpretty  slather -N
-  # download slather (to send coverage to http://coveralls.io)
-  - gem install slather --no-rdoc --no-ri --no-document --quiet
-  - rvm use $RVM_RUBY_VERSION
+  - gem install xcpretty
+  - gem install slather -N
+  # - gem install slather --no-rdoc --no-ri --no-document --quiet
+  # - rvm use $RVM_RUBY_VERSION
 
 install: 
-  - bundle install --without=documentation --path ../travis_bundle_dir
-  - gem install slather --no-rdoc --no-ri --no-document --quiet
-  - gem install xcpretty -N
-  - gem install coveralls
-  - gem install xcov
+  - bundle install
 
 jobs:
   include:
@@ -66,8 +62,9 @@ notifications:
     on_success: never
 
 after_success: 
+  - slather coverage -x --output-directory Report/slather/xml_report --scheme DangerPOC  DangerPOC.xcodeproj
   - slather
-  - bash <(curl -s https://codecov.io/bash) -f DangerPOC/Report/slather/xml_report -X coveragepy -X gcov -X xcode
+  # - bash <(curl -s https://codecov.io/bash) -f DangerPOC/Report/slather/xml_report -X coveragepy -X gcov -X xcode
   # - coveralls push
   # - bundle exec slather
   # - slather coverage -s --scheme DangerPOC DangerPOC.xcodeproj
