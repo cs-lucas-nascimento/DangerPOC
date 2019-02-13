@@ -51,7 +51,7 @@
 #   email: never
 #     # on_success: never
 
-language: objective-c
+language: swift
 
 before_install:
   # - brew install ruby
