@@ -28,10 +28,11 @@ install:
   - gem install slather -N #gem install slather --no-ri --no-rdoc  gem install slather --no-rdoc --no-ri --no-document --quiet
   - gem install danger
   - gem install coveralls
-  - gem slather
-  - gem xcpretty
-  - gem danger-xcov
-  - gem danger-commit_lint
+  - gem install slather
+  - gem install xcpretty
+  - gem install xcov
+  - gem install danger-xcov
+  - gem install danger-commit_lint
 
 jobs:
   include:
@@ -39,7 +40,8 @@ jobs:
       script: 
         - bash Script/run-test.sh
 
-after_success: slather
+after_success: 
+  - slather
   # - bash Script/coveralls.sh 
 
 notifications:
