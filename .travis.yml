@@ -23,14 +23,23 @@ env:
 before_install: 
   - gem install bundler
 
-install: bundle install
+install: 
+  - bundle install
+  - gem install slather -N
+  - gem install danger
+  - gem install coveralls
+  - gem xcov
+  - gem slather
+  - gem xcpretty
+  - gem danger-xcov
+  - gem danger-commit_lint
 
 jobs:
   include:
     - stage: Clean-Build-Tests
       script: 
         - bash Script/run-test.sh
-        
+
 after_success: 
   - bash Script/coveralls.sh 
 
