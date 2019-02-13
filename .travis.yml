@@ -29,12 +29,10 @@ jobs:
   include:
     - stage: Clean-Build-Tests
       script: 
-        - echo "*** Start Clean Build Tests *** "
-        - set -o pipefail && xcodebuild -project DangerPOC.xcodeproj -scheme DangerPOC -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' -enableCodeCoverage YES clean build-for-testing test | xcpretty -r "html" -o "Report/build.html"
-        - echo "*** Finish Clean Build Tests *** "
+        - bash Script/run-test.sh
+        
 after_success: 
-  - bash Script/coveralls.sh
-  - slather    
+  - bash Script/coveralls.sh 
 
 notifications:
   email:
