@@ -49,11 +49,10 @@ Carthage/*
 ## Slather
 Coverage/
 
-
-Report/slather/xml_report
-Report/*
-fastlane/report.xml
-fastlane/Preview.html
-fastlane/screenshots
-fastlane/test_output
-fastlane/xcov_report
+# Report/slather/xml_report
+# Report/*
+# fastlane/report.xml
+# fastlane/Preview.html
+# fastlane/screenshots
+# fastlane/test_output
+# fastlane/xcov_report
