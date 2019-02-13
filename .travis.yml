@@ -41,7 +41,7 @@ jobs:
         - bash Script/run-test.sh
 
 after_success: 
-  - slather
+  - slather coverage -x --output-directory Report/slather/xml_report --scheme DangerPOC  DangerPOC.xcodeproj
   - bash <(curl -s https://codecov.io/bash) -f Report/slather/xml_report/cobertura.xml -X coveragepy -X gcov -X xcode
   # - slather
   # - bash Script/coveralls.sh 
