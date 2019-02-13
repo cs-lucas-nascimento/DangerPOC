@@ -21,6 +21,7 @@
 #     - DESTINATION="OS=12.1,name=iPhone XR"                   
 
 # before_install: 
+#   - brew install ruby
 #   - gem install bundler
 
 # install: 
@@ -53,6 +54,8 @@
 language: objective-c
 
 before_install:
+  - brew install ruby
+  - gem install bundler
   - gem install slather -N 
 
 script:
