@@ -25,10 +25,9 @@ before_install:
 
 install: 
   - bundle install
-  - gem install slather -N
+  - gem install slather -N #gem install slather --no-ri --no-rdoc  gem install slather --no-rdoc --no-ri --no-document --quiet
   - gem install danger
   - gem install coveralls
-  - gem xcov
   - gem slather
   - gem xcpretty
   - gem danger-xcov
@@ -40,8 +39,8 @@ jobs:
       script: 
         - bash Script/run-test.sh
 
-after_success: 
-  - bash Script/coveralls.sh 
+after_success: slather
+  # - bash Script/coveralls.sh 
 
 notifications:
   email:
