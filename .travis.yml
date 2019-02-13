@@ -20,7 +20,9 @@ env:
   matrix:
     - DESTINATION="OS=12.1,name=iPhone XR"                   
 
-before_install: rvm use $RVM_RUBY_VERSION
+before_install: 
+  - gem install bundler
+  - rvm use $RVM_RUBY_VERSION
 
 install: bundle install --without=documentation --path ../travis_bundle_dir
 
@@ -32,6 +34,7 @@ jobs:
         - set -o pipefail && xcodebuild -project DangerPOC.xcodeproj -scheme DangerPOC -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' -enableCodeCoverage YES clean build-for-testing test | xcpretty -r "html" -o "Report/build.html"
         - echo "*** Finish Clean Build Tests *** "
 after_success: 
+  - bash Script/coveralls.sh
   - slather    
 
 notifications:
