@@ -22,9 +22,8 @@ env:
 
 before_install: 
   - gem install bundler
-  - rvm use $RVM_RUBY_VERSION
 
-install: bundle install --without=documentation --path ../travis_bundle_dir
+install: bundle install
 
 jobs:
   include:

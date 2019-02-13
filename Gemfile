@@ -1,7 +1,6 @@
 source "https://rubygems.org"
 
  gem "danger"
- # gem "fastlane"
  gem "coveralls"
  gem "xcov"
  gem "slather"
