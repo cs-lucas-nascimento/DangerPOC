@@ -41,7 +41,7 @@ install:
 
 jobs:
   include:
-    - stage: Clean-Build
+    - stage: Clean-Build-Tests
       script: 
         # - xcodebuild clean build-for-testing -project DangerPOC.xcodeproj -scheme "DangerPOC" -destination "name=iPhone XR,OS=12.1"
         - echo "*** Start Clean Build Tests *** "
@@ -67,6 +67,7 @@ notifications:
 
 after_success: 
   - slather
+  - bash <(curl -s https://codecov.io/bash) -f DangerPOC/Report/slather/xml_report -X coveragepy -X gcov -X xcode
   # - coveralls push
   # - bundle exec slather
   # - slather coverage -s --scheme DangerPOC DangerPOC.xcodeproj
