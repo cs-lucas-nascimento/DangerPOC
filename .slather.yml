@@ -1,23 +1,23 @@
 # Coveralls
-# ci_service: travis_ci
-# coverage_service: coveralls
-# xcodeproj: DangerPOC.xcodeproj
+ci_service: travis_ci
+coverage_service: coveralls
+xcodeproj: DangerPOC.xcodeproj
+ignore:
+  - DangerPOCTests/*
 # scheme: DangerPOC
 # source_directory: DangerPOC
-# ignore:
-#   - DangerPOCTests/*
 # scheme: DangerPOC
 # output_directory: Report/slather/xml_report
 
 # Codecov
 
-coverage_service: cobertura_xml
-xcodeproj: DangerPOC/DangerPOC.xcodeproj
-scheme: DangerPOC
-source_directory: DangerPOC
-output_directory: Report/slather/xml_report
-ignore:
-  - DangerPOCTests/*
+# coverage_service: cobertura_xml
+# xcodeproj: DangerPOC/DangerPOC.xcodeproj
+# scheme: DangerPOC
+# source_directory: DangerPOC
+# output_directory: Report/slather/xml_report
+# ignore:
+#   - DangerPOCTests/*
 
 # Cobertura
 
