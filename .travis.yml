@@ -54,7 +54,8 @@
 language: objective-c
 
 before_install:
-  - brew install ruby
+  # - brew install ruby
+  - brew reinstall ruby
   - gem install bundler
   - gem install slather -N 
 
