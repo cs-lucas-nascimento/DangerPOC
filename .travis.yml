@@ -56,6 +56,7 @@ cache:
   - bundler
 
 before_install:
+  - gem install bundler
   - bundle install
 
 before_script:
