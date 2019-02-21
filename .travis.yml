@@ -59,18 +59,24 @@ cache:
 before_install:
   - gem install bundler
   - bundle install
-
-before_script:
-  - bundle exec danger
+  - gem install danger-slather
+  - gem install slather -N #gem install slather --no-ri --no-rdoc  gem install slather --no-rdoc --no-ri --no-document --quiet
+  - gem install danger
+  - gem install coveralls
+  - gem install slather
+  - gem install xcpretty
+  - gem install xcov
+  - gem install danger-xcov
+  - gem install danger-commit_lint 
 
 script:
-  - set -o pipefail
   - bash Script/run-test.sh
+  - bundle exec danger
   # - xcodebuild -project DangerPOC.xcodeproj -scheme DangerPOC -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone XR,OS=12.1' clean build test ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES  
 
 after_success: 
-  - bash <(curl -s https://codecov.io/bash)
-  - slather 
+  - bash <(curl -s https://codecov.io/bash) -f Report/slather/xml_report/cobertura.xml -X coveragepy -X gcov -X xcode
+  - slather coverage -x --output-directory Report/slather/xml_report --scheme DangerPOC  DangerPOC.xcodeproj
 
 
 
