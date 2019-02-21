@@ -50,7 +50,6 @@
 # notifications:
 #   email: never
 #     # on_success: never
-
 language: swift
 osx_image: xcode10.1
 cache:
